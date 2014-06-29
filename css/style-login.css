@@ -1,0 +1,16 @@
+/* Login Page */
+body.login div#login h1 a {
+	background-image: url(../images/logo.png);
+	padding-bottom:30px;
+	-webkit-background-size: auto;
+	background-size: auto;
+	width: 100%;
+	height: auto;
+}
+#login form p span {
+	margin:15px auto;
+	display: block;
+}
+body.login div#login p#backtoblog {
+	display: none;
+}
