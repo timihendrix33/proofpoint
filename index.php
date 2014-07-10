@@ -10,6 +10,7 @@
 <?php get_header(); ?>
 	
     <section id="content" role="main" class="clearfix animated">
+    <?php if (!is_paged()) : ?>
       <div class="promo">
         <div class="promo-content">
           <?php
@@ -25,6 +26,7 @@
            <img src="wp-content/themes/simplemag-child/images/down-arrow.png" />
         </a>
       </div>
+    <?php endif; ?>
 
     	<div class="wrapper">
         <div class="previous-section-indicator"></div>

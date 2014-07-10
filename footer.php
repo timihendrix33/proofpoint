@@ -19,7 +19,8 @@ global $ti_option;
                         <?php echo $ti_option['copyright_text']; ?>
                     </div>
                     <div class="back-top-wrap">
-                        <a href="#" class="back-top"><?php _e( 'Back to top', 'themetext' ); ?> <i class="icon-chevron-up"></i></a>
+                        <a href="#" class="back-top"><?php _e( 'Back to top', 'themetext' ); ?><i class="icon-chevron-up"></i></a>
+                        <a class="hww-logo" href="http://www.havasworldwide.com/"><img src="<?php echo get_stylesheet_directory_uri()?>/images/havasww-logo.jpg" alt="Havas Worldwide" /></a>
                     </div>
                 </div>
             </div>
@@ -31,7 +32,7 @@ global $ti_option;
 </div><!-- #outer-wrap -->
     
 <?php wp_footer(); ?>
-<script>
+<script type="text/javascript">
     new UISearch( document.getElementById( 'sb-search' ) );
 </script>
 </body>

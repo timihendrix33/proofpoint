@@ -135,6 +135,8 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
      
     
     </header><!-- #masthead -->
+    <div class="wrapper">
         <div id="pageslide">
             <a id="close-pageslide" href="#top"><i class="icon-remove-sign"></i></a>
         </div><!-- Sidebar in Mobile View -->       
+    </div>

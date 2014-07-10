@@ -19,7 +19,7 @@
         
             <h2>
                 <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" rel="author">
-                    <?php printf( __( '%s', 'themetext' ), get_the_author() ); ?>
+                    Posts by <?php printf( __( '%s', 'themetext' ), get_the_author() ); ?>
                 </a>
             </h2>
             <p><?php the_author_meta( 'description' ); ?></p>

@@ -60,8 +60,14 @@ jQuery(document).ready(function($) {
 	/* Hero Area sizing to screen height */
 	
 	var resizeHero = function(){
-		var windowHeight = $(window).height();
-		$(".promo").height(windowHeight);
+		var windowHeight = $(window).height(),
+			vieweportWidth = $(window).width(),
+			navHeight = $("#masthead").height();
+		if(vieweportWidth < 801) {
+			$(".promo").height(windowHeight-navHeight);	
+		} else {
+			$(".promo").height(windowHeight);	
+		}
 	}
 	resizeHero();
 	$(window).resize(resizeHero);
@@ -422,6 +428,12 @@ jQuery(document).ready(function($) {
 	$('.back-top').click(function(){
 		$('html, body').animate({scrollTop:0}, 'fast');
 		return false;
+	});
+
+	/* Line Clamp */
+	$('.entry-summary').dotdotdot({
+		ellipsis: '...',
+		height: 60
 	});
 
 });// - document ready
