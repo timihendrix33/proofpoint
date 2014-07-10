@@ -321,7 +321,11 @@ left: 50%;
 margin-left: -24px;	
 }
 
-/* Posts on Index Pages */
+/* Index Pages */
+#content .wrapper  {
+	padding-top:140px;
+	position: relative;
+}
 .home article.post,
 .category article.post,
 .author article.post,
@@ -457,6 +461,11 @@ margin-left: -24px;
 	color: #dc002e;	
 	text-decoration: underline;
 }
+.pagination li a.next:hover,
+.pagination li a.prev:hover {
+	color: #fff;
+	background-color: #dc002e;
+}
 .copyright {
 	padding:0 0 30px 0;
 }
@@ -476,18 +485,8 @@ margin-left: -24px;
 }
 
 /* Single Pages */
-/*.category #content .wrapper,
-.search #content .wrapper,
-.author #content .wrapper,
-.page #content .wrapper,
-.error404 #content .wrapper*/
-#content .wrapper  {
-	padding-top:140px;
-	position: relative;
-}
-#branding {padding:150px 0 40px;}
-.single header.wrapper {padding-top:140px;}
-.single .wrapper {padding-top:0;}
+.single #content header.wrapper {padding-top:140px;}
+.single #content .wrapper {padding-top:0;}
 .page-title, .single-title, 
 .home-section .section-header .title,
 .category-section .section-header .title, 
@@ -502,6 +501,7 @@ margin-left: -24px;
 	color:#000;
 }
 .single .entry-content > p:first-of-type:first-letter {
+	/* overriding theme's first letter styles */
 	font-size: inherit; 
 	float: none; 
 	line-height: inherit;
@@ -531,7 +531,6 @@ ul.taxonomies li.multiple-terms span:after {
 	text-decoration: none;
 	margin-right:4px;
 }
-
 ul.taxonomies li.multiple-terms a:last-child:after,
 ul.taxonomies li.multiple-terms span:last-child:after {
 	content: "";

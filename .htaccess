@@ -1,0 +1,27 @@
+#AuthName "Authentication Required"
+#AuthType Basic 
+#AuthUserFile /srv/passwords/.passwords.siemens-wp
+#AuthGroupFile /dev/null 
+#require valid-user
+
+AddType video/x-m4v .m4v
+AddType application/ogg .ogg
+AddType audio/ogg .ogg
+AddType video/ogg .ogv
+AddType video/webm .webm
+AddType video/mp4 .mp4
+
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
+php_value max_execution_time 300
+php_value max_input_time 300
+</IfModule>
