@@ -445,9 +445,24 @@ jQuery(document).ready(function($) {
 	$(window).resize(lineClamp);	
 
 	//Hide Back to top button
-	var windowHeight = $(window).height();
-	if($("#content").height() < windowHeight) {
-		$(".back-top").hide();
+	var hideBackTop = function(){
+		var windowHeight = $(window).height();
+		if($("#content").height() < windowHeight) {
+			$(".back-top").hide();
+		}
 	}
+	hideBackTop();
+	$(window).resize(hideBackTop);
+
+	//Scroll pageslide menu styles if viewport is shorter than menu
+	var pageslideScroll = function(){
+		var pageslideHeight = $("#pageslide").height();
+		var windowHeight = $(window).height() - 87;
+		if(pageslideHeight >= windowHeight) {
+			$("#pageslide").addClass("too-long");
+		}
+	}
+	pageslideScroll();
+	$(window).resize(pageslideScroll);
 
 });// - document ready

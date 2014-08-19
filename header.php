@@ -79,7 +79,7 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
                                 //echo '<img src="'. get_template_directory_uri() . '/images/' . $current_name . '.png" alt="' . $current . '" />  ';
 
                             } else {
-                                echo ("<span>Industries <i class='fa fa-angle-down'></i></span>");
+                                echo ("<span>Categories <i class='fa fa-angle-down'></i></span>");
                             }
                         ?>        
                         <i class="fa fa-bars fa-2"></i>

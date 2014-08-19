@@ -84,7 +84,7 @@ input[type="email"]:focus, input[type="password"]:focus,
 	position: fixed;
 	top:0;
 	width: 100%;
-	z-index: 2;
+	z-index: 4;
 	margin-bottom: 0;
 }	
 .top-strip {
@@ -406,6 +406,8 @@ article.post .entry-summary {
 	overflow: hidden;
 	color:#fff;
 	font-size: 20px;
+	text-transform: none;
+	letter-spacing: 0;
 }	
 
 /* Search Results */
@@ -768,7 +770,13 @@ div.ufo-form div.ufo-customform-row * {
 		display: none;
 	}
 	#pageslide .menu li a {padding:1em 1.25em;}
-	#pageslide .menu li, #pageslide .menu li a {border:none;}
+	#pageslide .menu li, #pageslide .menu li a {
+		border:none;
+		font-family: Lato, Arial, Verdana, 'Helvetica Neue', Helvetica, sans-serif;
+		text-transform: none;
+		font-size: 14px;
+		letter-spacing: 0;
+	}
 	#pageslide .menu li a:hover {
 		background-color: rgba(0,0,0,.2);
 		color: #fff;
@@ -795,7 +803,7 @@ div.ufo-form div.ufo-customform-row * {
 		transform: translate3d(0%,80px,0);
 		height: 0;
 		display: block;
-		z-index: 1;
+		z-index: 3;
 	}	
 	.csstransforms3d.csstransitions.js-ready.js-nav #pageslide {
 		-webkit-transform: translate3d(0,87px,0);
@@ -821,6 +829,13 @@ div.ufo-form div.ufo-customform-row * {
 	}
 	#pageslide .menu .label {
 		display: none;
+	}
+	.csstransforms3d.csstransitions.js-ready.js-nav #pageslide.too-long {
+		height: 100% !important;
+		overflow: scroll;
+	}
+	.csstransforms3d.csstransitions.js-ready.js-nav #pageslide.too-long .block {
+		height: 100%;
 	}
 }
 @media (max-width: 800px) {

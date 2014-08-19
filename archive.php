@@ -81,7 +81,7 @@
                             echo "<div class='export'>";
                             $post_attachments = get_category_post_attachments();
                             $result = create_zip($post_attachments, $_SERVER['DOCUMENT_ROOT'] . '/wp-content/themes/simplemag-child/zips/proofpoint-slides.zip' , true);
-                            echo "<a class='button' href='http://proofpoint.havasworldwide.com/wp-content/themes/simplemag-child/zips/proofpoint-slides.zip'>Download <span>Powerpoint</span> Slides</a>";
+                            echo "<a class='button' href='http://proofpoint.havasworldwide.com/wp-content/themes/simplemag-child/zips/proofpoint-slides.zip'>Download Slides</a>";
                             echo "</div>";
                         }
                     ?> 
