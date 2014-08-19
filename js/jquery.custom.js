@@ -15,7 +15,9 @@ jQuery(document).ready(function($) {
 			if ($(element).children().length === 0) {
 				$(element).remove();
 			}
-		});
+		});				
+		
+
 				
 		// $('#masthead nav ul > li:has(.sub-menu)').hoverIntent(showMenu,hideMenu);
 		
@@ -58,15 +60,15 @@ jQuery(document).ready(function($) {
 	};
 
 	/* Hero Area sizing to screen height */
-	
+
 	var resizeHero = function(){
 		var windowHeight = $(window).height(),
-			vieweportWidth = $(window).width(),
-			navHeight = $("#masthead").height();
-		if(vieweportWidth < 801) {
+			viewportWidth = $(window).width(),
+			navHeight = $("#masthead").height();		
+		if(viewportWidth < 801) {
 			$(".promo").height(windowHeight-navHeight);	
 		} else {
-			$(".promo").height(windowHeight);	
+			$(".promo").height(windowHeight);
 		}
 	}
 	resizeHero();
@@ -431,9 +433,21 @@ jQuery(document).ready(function($) {
 	});
 
 	/* Line Clamp */
-	$('.entry-summary').dotdotdot({
-		ellipsis: '...',
-		height: 60
-	});
+	var lineClamp = function(){
+		var summaryHeightSetter = $('.entry-summary').parent().height();
+		var entrySummaryHeight = (summaryHeightSetter/3) + 10;
+		$('.entry-summary').dotdotdot({
+			ellipsis: '...',
+			height: entrySummaryHeight
+		});
+	}
+	lineClamp();
+	$(window).resize(lineClamp);	
+
+	//Hide Back to top button
+	var windowHeight = $(window).height();
+	if($("#content").height() < windowHeight) {
+		$(".back-top").hide();
+	}
 
 });// - document ready

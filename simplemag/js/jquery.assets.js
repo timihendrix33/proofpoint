@@ -12,7 +12,106 @@
 (function(e,t,n){"use strict";var r=t.event,i;r.special.smartresize={setup:function(){t(this).bind("resize",r.special.smartresize.handler)},teardown:function(){t(this).unbind("resize",r.special.smartresize.handler)},handler:function(e,t){var n=this,s=arguments;e.type="smartresize",i&&clearTimeout(i),i=setTimeout(function(){r.dispatch.apply(n,s)},t==="execAsap"?0:100)}},t.fn.smartresize=function(e){return e?this.bind("smartresize",e):this.trigger("smartresize",["execAsap"])},t.Mason=function(e,n){this.element=t(n),this._create(e),this._init()},t.Mason.settings={isResizable:!0,isAnimated:!1,animationOptions:{queue:!1,duration:500},gutterWidth:0,isRTL:!1,isFitWidth:!1,containerStyle:{position:"relative"}},t.Mason.prototype={_filterFindBricks:function(e){var t=this.options.itemSelector;return t?e.filter(t).add(e.find(t)):e},_getBricks:function(e){var t=this._filterFindBricks(e).css({position:"absolute"}).addClass("masonry-brick");return t},_create:function(n){this.options=t.extend(!0,{},t.Mason.settings,n),this.styleQueue=[];var r=this.element[0].style;this.originalStyle={height:r.height||""};var i=this.options.containerStyle;for(var s in i)this.originalStyle[s]=r[s]||"";this.element.css(i),this.horizontalDirection=this.options.isRTL?"right":"left";var o=this.element.css("padding-"+this.horizontalDirection),u=this.element.css("padding-top");this.offset={x:o?parseInt(o,10):0,y:u?parseInt(u,10):0},this.isFluid=this.options.columnWidth&&typeof this.options.columnWidth=="function";var a=this;setTimeout(function(){a.element.addClass("masonry")},0),this.options.isResizable&&t(e).bind("smartresize.masonry",function(){a.resize()}),this.reloadItems()},_init:function(e){this._getColumns(),this._reLayout(e)},option:function(e,n){t.isPlainObject(e)&&(this.options=t.extend(!0,this.options,e))},layout:function(e,t){for(var n=0,r=e.length;n<r;n++)this._placeBrick(e[n]);var i={};i.height=Math.max.apply(Math,this.colYs);if(this.options.isFitWidth){var s=0;n=this.cols;while(--n){if(this.colYs[n]!==0)break;s++}i.width=(this.cols-s)*this.columnWidth-this.options.gutterWidth}this.styleQueue.push({$el:this.element,style:i});var o=this.isLaidOut?this.options.isAnimated?"animate":"css":"css",u=this.options.animationOptions,a;for(n=0,r=this.styleQueue.length;n<r;n++)a=this.styleQueue[n],a.$el[o](a.style,u);this.styleQueue=[],t&&t.call(e),this.isLaidOut=!0},_getColumns:function(){var e=this.options.isFitWidth?this.element.parent():this.element,t=e.width();this.columnWidth=this.isFluid?this.options.columnWidth(t):this.options.columnWidth||this.$bricks.outerWidth(!0)||t,this.columnWidth+=this.options.gutterWidth,this.cols=Math.floor((t+this.options.gutterWidth)/this.columnWidth),this.cols=Math.max(this.cols,1)},_placeBrick:function(e){var n=t(e),r,i,s,o,u;r=Math.ceil(n.outerWidth(!0)/this.columnWidth),r=Math.min(r,this.cols);if(r===1)s=this.colYs;else{i=this.cols+1-r,s=[];for(u=0;u<i;u++)o=this.colYs.slice(u,u+r),s[u]=Math.max.apply(Math,o)}var a=Math.min.apply(Math,s),f=0;for(var l=0,c=s.length;l<c;l++)if(s[l]===a){f=l;break}var h={top:a+this.offset.y};h[this.horizontalDirection]=this.columnWidth*f+this.offset.x,this.styleQueue.push({$el:n,style:h});var p=a+n.outerHeight(!0),d=this.cols+1-c;for(l=0;l<d;l++)this.colYs[f+l]=p},resize:function(){var e=this.cols;this._getColumns(),(this.isFluid||this.cols!==e)&&this._reLayout()},_reLayout:function(e){var t=this.cols;this.colYs=[];while(t--)this.colYs.push(0);this.layout(this.$bricks,e)},reloadItems:function(){this.$bricks=this._getBricks(this.element.children())},reload:function(e){this.reloadItems(),this._init(e)},appended:function(e,t,n){if(t){this._filterFindBricks(e).css({top:this.element.height()});var r=this;setTimeout(function(){r._appended(e,n)},1)}else this._appended(e,n)},_appended:function(e,t){var n=this._getBricks(e);this.$bricks=this.$bricks.add(n),this.layout(n,t)},remove:function(e){this.$bricks=this.$bricks.not(e),e.remove()},destroy:function(){this.$bricks.removeClass("masonry-brick").each(function(){this.style.position="",this.style.top="",this.style.left=""});var n=this.element[0].style;for(var r in this.originalStyle)n[r]=this.originalStyle[r];this.element.unbind(".masonry").removeClass("masonry").removeData("masonry"),t(e).unbind(".masonry")}},t.fn.imagesLoaded=function(e){function u(){e.call(n,r)}function a(e){var n=e.target;n.src!==s&&t.inArray(n,o)===-1&&(o.push(n),--i<=0&&(setTimeout(u),r.unbind(".imagesLoaded",a)))}var n=this,r=n.find("img").add(n.filter("img")),i=r.length,s="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",o=[];return i||u(),r.bind("load.imagesLoaded error.imagesLoaded",a).each(function(){var e=this.src;this.src=s,this.src=e}),n};var s=function(t){e.console&&e.console.error(t)};t.fn.masonry=function(e){if(typeof e=="string"){var n=Array.prototype.slice.call(arguments,1);this.each(function(){var r=t.data(this,"masonry");if(!r){s("cannot call methods on masonry prior to initialization; attempted to call method '"+e+"'");return}if(!t.isFunction(r[e])||e.charAt(0)==="_"){s("no such method '"+e+"' for masonry instance");return}r[e].apply(r,n)})}else this.each(function(){var n=t.data(this,"masonry");n?(n.option(e||{}),n._init()):t.data(this,"masonry",new t.Mason(e,this))});return this}})(window,jQuery);
 
 /* 3 */
-(function(e,t,n){var r=function(e){return e.trim?e.trim():e.replace(/^\s+|\s+$/g,"")};var i=function(e,t){return(" "+e.className+" ").indexOf(" "+t+" ")!==-1};var s=function(e,t){if(!i(e,t)){e.className=e.className===""?t:e.className+" "+t}};var o=function(e,t){e.className=r((" "+e.className+" ").replace(" "+t+" "," "))};var u=function(e,t){if(e){do{if(e.id===t){return true}if(e.nodeType===9){break}}while(e=e.parentNode)}return false};var a=t.documentElement;var f=e.Modernizr.prefixed("transform"),l=e.Modernizr.prefixed("transition"),c=function(){var e={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",msTransition:"MSTransitionEnd",transition:"transitionend"};return e.hasOwnProperty(l)?e[l]:false}();e.App=function(){var n=false,r={};var f=t.getElementById("inner-wrap"),h=false,p="js-nav";r.init=function(){if(n){return}n=true;var d=function(e){if(e&&e.target===f){t.removeEventListener(c,d,false)}h=false};r.closeNav=function(){if(h){var n=c&&l?parseFloat(e.getComputedStyle(f,"")[l+"Duration"]):0;if(n>0){t.addEventListener(c,d,false)}else{d(null)}}o(a,p)};r.openNav=function(){if(h){return}s(a,p);h=true};r.toggleNav=function(e){if(h&&i(a,p)){r.closeNav()}else{r.openNav()}if(e){e.preventDefault()}};t.getElementById("open-pageslide").addEventListener("click",r.toggleNav,false);t.getElementById("close-pageslide").addEventListener("click",r.toggleNav,false);t.addEventListener("click",function(e){if(h&&!u(e.target,"pageslide")){e.preventDefault();r.closeNav()}},true);s(a,"js-ready")};return r}();if(e.addEventListener){e.addEventListener("DOMContentLoaded",e.App.init,false)}})(window,window.document);
+(function (e, t, n) {
+    var r = function (e) {
+        return e.trim ? e.trim() : e.replace(/^\s+|\s+$/g, "")
+    };
+    // Checks in js-nav is a class on html
+    var i = function (e, t) {
+        return (e.className).indexOf(t) !== -1
+    };
+    // Adds js-nav to html if i returns false
+    var s = function (e, t) {
+        if (!i(e, t)) {
+            e.className = e.className === "" ? t : e.className + " " + t
+        }
+    };
+    // Removes js-nav from html
+    var o = function (e, t) {
+        e.className = r((" " + e.className + " ").replace(" " + t + " ", " "))
+    };
+
+    // Checks if mouse click event target is anything other than open-pageslide or pageslide.
+    // If yes, breaks click event and closes pageslide.
+    // If no, regular mouse click event
+    var u = function (e, t) {
+        if (e) {
+            do {
+                if (e.id === t || e.id == "open-pageslide") {
+                    return true
+                }
+                if (e.nodeType === 9) {
+                    break
+                }
+            } while (e = e.parentNode)
+        }
+        return false
+    };
+    var a = t.documentElement;
+    var f = e.Modernizr.prefixed("transform"),
+        l = e.Modernizr.prefixed("transition"),
+        c = function () {
+            var e = {
+                WebkitTransition: "webkitTransitionEnd",
+                MozTransition: "transitionend",
+                OTransition: "oTransitionEnd otransitionend",
+                msTransition: "MSTransitionEnd",
+                transition: "transitionend"
+            };
+            return e.hasOwnProperty(l) ? e[l] : false
+        }();
+    e.App = function () {
+        var n = false,
+            r = {};
+        var f = t.getElementById("inner-wrap"),
+            h = false,
+            p = "js-nav";
+        r.init = function () {
+            if (n) {
+                return
+            }
+            n = true;
+
+            // Closes nav, removes js-nav class
+            r.closeNav = function () {
+
+                o(a, p)
+            };
+
+            // opens nav, adds js-nav class
+            r.openNav = function () {
+                s(a, p);
+            };
+
+            //handles whether close or open is called based on whether html has js-nav as class
+            r.toggleNav = function (e) {
+                if (i(a, p)) {
+                    r.closeNav()
+                } else {
+                    r.openNav()
+                } if (e) {
+                    e.preventDefault()
+                }              
+            };
+            t.getElementById("open-pageslide").addEventListener("click", r.toggleNav, false);
+            t.getElementById("close-pageslide").addEventListener("click", r.toggleNav, false);
+
+            // if html has js-nav class, run the click event target function
+            t.addEventListener("click", function (e) {
+                if (i(a, p) && !u(e.target, "pageslide")) {
+                    e.preventDefault();
+                    r.closeNav()
+                }
+            }, true);
+            s(a, "js-ready")
+        };
+        return r
+    }();
+    if (e.addEventListener) {
+        e.addEventListener("DOMContentLoaded", e.App.init, false)
+    }
+})(window, window.document);
+
 
 /* 4 */
 (function(d){var p={},e,a,h=document,i=window,f=h.documentElement,j=d.expando;d.event.special.inview={add:function(a){p[a.guid+"-"+this[j]]={data:a,$element:d(this)}},remove:function(a){try{delete p[a.guid+"-"+this[j]]}catch(d){}}};d(i).bind("scroll resize",function(){e=a=null});!f.addEventListener&&f.attachEvent&&f.attachEvent("onfocusin",function(){a=null});setInterval(function(){var k=d(),j,n=0;d.each(p,function(a,b){var c=b.data.selector,d=b.$element;k=k.add(c?d.find(c):d)});if(j=k.length){var b;

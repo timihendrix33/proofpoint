@@ -7,11 +7,17 @@
 		// Remove default jquery.custom.js
 		wp_dequeue_script( 'custom' );
 
+		// Remove default jquery.assets.js
+		wp_dequeue_script( 'assets' );
+
 		// Add clamp.js
 		wp_enqueue_script( 'dotdotdot', get_stylesheet_directory_uri() . '/js/jquery.dotdotdot.js', 'jquery', '1.0', true);				
 
 		// Add new jquery.custom.js
 		wp_enqueue_script( 'new-custom', get_stylesheet_directory_uri() . '/js/jquery.custom.js', 'jquery', '1.0', true);
+
+		// Add new jquery.assets.js
+		wp_enqueue_script( 'new-assets', get_stylesheet_directory_uri() . '/js/jquery.assets.js', 'jquery', '1.0', true);		
 
 		// Add Classie.js
 		wp_enqueue_script( 'classie', get_stylesheet_directory_uri() . '/js/classie.js', 'jquery', '1.0', true);	
@@ -20,10 +26,38 @@
 		wp_enqueue_script( 'modernizr', get_stylesheet_directory_uri() . '/js/modernizr.custom.js', 'jquery', '1.0', true);
 
 		// Add searchform.js
-		wp_enqueue_script( 'searchform', get_stylesheet_directory_uri() . '/js/searchform.js', 'jquery', '1.0', true);		 
+		wp_enqueue_script( 'searchform', get_stylesheet_directory_uri() . '/js/searchform.js', 'jquery', '1.0', true);		
+
+		// Add infinitescroll.min.js
+		//wp_enqueue_script( 'infinite', get_stylesheet_directory_uri() . '/js/jquery.infinitescroll.min.js', 'jquery', '1.0', true);				 
 
 	}
 	add_action( 'wp_enqueue_scripts', 'my_replace_custom_script', 100 );
+
+	function infinite_scroll() {
+		if (!is_singular() ) { ?>
+		<script>
+		var infinite_scroll = {
+			loading: {
+				img: "<?php echo get_stylesheet_directory_uri(); ?>/images/ajax-loader.gif",
+				msgText: "<?php _e( 'Loading the next set of posts...', 'custom' ); ?>",
+				finishedMsg: "<?php _e( 'All posts loaded.', 'custom' ); ?>"
+			},
+			"nextSelector":"#content .pagination .page-numbers li a.next",
+			"navSelector":"#content .pagination .page-numbers",
+			"itemSelector":"article",
+			"contentSelector":"#content .wrapper .grids"
+		};
+		jQuery( infinite_scroll.contentSelector ).infinitescroll( infinite_scroll );
+		</script>
+		}
+
+		<?php
+		}
+	}
+	//add_action( 'wp_footer', 'infinite_scroll', 100 );
+
+
 
 	add_action( 'init', 'taxonomies_init' );
 
@@ -147,5 +181,92 @@
 	// Include PPT upload file
 
 	include 'ppt_upload.php';
+
+	// Paging
+
+	add_filter('query_vars', 'parameter_queryvars' ); // Let WP accept the query argument we will use
+	function parameter_queryvars( $qvars )
+	{
+	    $qvars[] = 'posts_per_page';
+	    return $qvars;
+	}
+	add_action( 'pre_get_posts', 'change_post_per_page' ); // Filter posts based on passed query variable if set
+	function change_post_per_page( $query ) {
+	    global $wp_query;
+	    if ( !empty($wp_query->query['posts_per_page']) && is_numeric($wp_query->query['posts_per_page'])) {
+	        $query->set( 'posts_per_page', $wp_query->query['posts_per_page'] );
+	    }
+	}
+
+	function get_category_post_attachments() {
+		//get the category ID
+		if (is_category() || is_single()){
+          $cat = get_category_by_path(get_query_var('category_name'),false);
+          $current = $cat->cat_ID;
+        }
+        //set args to current cat ID, unlimited # of posts
+		$args = array(
+			'category'	=> $current,
+			'posts_per_page' => -1
+		);
+		// get current posts
+		$category_posts_array = get_posts($args);
+		// add current posts ids to an array
+		$category_post_ids = array();
+		foreach ($category_posts_array as $post) {
+			$post_id = $post->ID;
+			$category_post_ids[] = $post_id;
+		}
+		// get post attachment urls from post ids array, add to a different array
+	    $attachments = array();
+	    foreach ($category_post_ids as $fav) { 
+	        $attachment_id = get_post_meta($fav, 'ppt_file_advanced', true);
+	        $attachment_url = wp_get_attachment_url($attachment_id);
+	        $attachments[] = $attachment_url;
+	    }
+	    // return array of post attachment urls
+	    return $attachments;
+	}
+
+	/* creates a compressed zip file */
+	function create_zip($files = array(),$destination = "",$overwrite = false) {
+	    //if the zip file already exists and overwrite is false, return false
+	    if(file_exists($destination) && !$overwrite) { return false; }
+	    //vars
+	    $valid_files = array();
+	    //if files were passed in...
+	    if(is_array($files)) {
+	        //cycle through each file
+	        foreach($files as $file) {
+	            //make sure the file exists
+	            $valid_files[] = $file;
+	        }
+	    }
+	    //if we have good files...
+	    if(count($valid_files)) {
+	        //create the archive
+	        $zip = new ZipArchive();
+
+	        if($zip->open($destination,$overwrite ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE) !== true) {
+	            return false;
+	        }
+	        //add the files
+	        foreach($valid_files as $file) {
+	            // $zip->addFile($file,$file);
+	            $content = file_get_contents($file);
+	            $zip->addFromString(pathinfo ( $file, PATHINFO_BASENAME), $content);            
+	        }
+	        //debug
+	        //echo 'The zip archive contains ',$zip->numFiles . "<br />",' files with a status of ',$zip->status . "<br />", $zip->filename . "<br />";      
+	     
+	        //close the zip -- done!
+	        $zip->close();
+	        
+	        //check to make sure the file exists
+	        return file_exists($destination);
+	    } else {
+	        return false;
+	    }
+	 }
 
 ?>

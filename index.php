@@ -28,8 +28,13 @@
       </div>
     <?php endif; ?>
 
-    	<div class="wrapper">
-        <div class="previous-section-indicator"></div>
+    	<div class="wrapper <?php if (!is_paged()) {echo 'first-page';}?>">
+
+          <div class="entry-header">
+            <h1 class="entry-title page-title">Latest Posts</h1>            
+          </div>
+
+        <!-- <div class="previous-section-indicator"></div> -->
 			<?php
             // Enable/Disable sidebar based on the field selection
             if ( get_field( 'page_sidebar' ) == 'page_sidebar_on'):
@@ -37,18 +42,35 @@
             <div class="grids">
                 <div class="grid-8">
                 <?php endif; ?>
-                
+                <div class="export clearfix">
+                     <div class="posts-per-page">
+                            <p>Items per page:
+                              <a class="<?php if($wp_query->query['posts_per_page'] == 15){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] . array_shift(explode('?',$_SERVER["REQUEST_URI"])) ?>?posts_per_page=15">15</a>
+                              <a class="<?php if($wp_query->query['posts_per_page'] == 30 || $wp_query->query['posts_per_page'] == ''){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] . array_shift(explode('?',$_SERVER["REQUEST_URI"])) ?>?posts_per_page=30">30</a>
+                              <a class="<?php if($wp_query->query['posts_per_page'] == 50){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] . array_shift(explode('?',$_SERVER["REQUEST_URI"])) ?>?posts_per_page=50">50</a>
+                            </p>
+                    </div>    
+                    <?php ti_pagination(); ?>      
+                </div>          
                     <div class="grids masonry-layout entries">
-                    <?php 
-                    if ( have_posts() ) :
-                    while ( have_posts()) : the_post();
-                    
-                        get_template_part( 'content', 'post' );
-                    
-                    endwhile; ?>
+                      <div class="infinite-wrapper">
+                        <?php 
+                        if ( have_posts() ) :
+                        while ( have_posts()) : the_post();
+                        
+                            get_template_part( 'content', 'post' );
+                        
+                        endwhile; ?>
+                      </div>
                     </div>
                     
                     	<?php ti_pagination(); ?>
+
+<!--                     <div class="pagination">
+                      <div class="page-numbers">
+                        <a href="<?php get_pagenum_link($page + 1) ?>" class="next">More Posts</a>
+                      </div>
+                    </div> -->
                         
                     <?php else : ?>
                     

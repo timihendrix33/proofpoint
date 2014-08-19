@@ -97,7 +97,8 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
                             'walker' => new TI_Menu()
                          ));
                     endif;
-                    ?>         
+                    ?> 
+                            
 
                     <?php get_search_form(); ?>       
                     
@@ -140,3 +141,46 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
             <a id="close-pageslide" href="#top"><i class="icon-remove-sign"></i></a>
         </div><!-- Sidebar in Mobile View -->       
     </div>
+
+    <script>
+        var update_bookmarks_count = function() {
+
+            
+            console.log(<?php echo wpfp_user_favs_count(); ?>);
+            var $bookmarks = '(' + <?php echo wpfp_user_favs_count(); ?> + ')';
+            if($bookmarks !== "(0)") {
+                jQuery("#user_favs_count").html($bookmarks);
+                console.log("ubc is being called");
+            }
+        }
+        update_bookmarks_count();
+
+        var increase_bookmarks_count = function(){
+            var $bookmarks = jQuery("#user_favs_count").html().replace ( /[^\d.]/g, '' );
+                ++$bookmarks;
+                if($bookmarks !== 0) {
+                    jQuery("#user_favs_count").html('(' + $bookmarks +  ')');
+                } else {
+                    jQuery("#user_favs_count").html('');
+                }                
+        }
+        var decrease_bookmarks_count = function(){
+            var $bookmarks = jQuery("#user_favs_count").html().replace ( /[^\d.]/g, '' ) - 1;
+                if($bookmarks !== 0) {
+                    jQuery("#user_favs_count").html('(' + $bookmarks +  ')');
+                } else {
+                    jQuery("#user_favs_count").html('');
+                }
+        }
+            //Remove favorites when cleared
+        var remove_favorites = function() {
+            jQuery(".wpfp-span.grids").fadeOut().remove();
+            jQuery("#user_favs_count").html('');
+        }
+ 
+    </script>
+
+
+
+
+

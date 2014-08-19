@@ -41,6 +41,16 @@ global $ti_option;
                         <?php } ?>
         
                         <div class="page-content">
+
+                        <?php
+                        $category_ids = get_all_category_ids();
+                        foreach($category_ids as $cat_id) {
+                          $cat_name = get_cat_name($cat_id);
+                          echo $cat_id . ': ' . $cat_name . '<br />';
+                        }
+                        ?>
+
+
                         	<?php the_content(); ?>
                         </div>
                         
@@ -55,15 +65,8 @@ global $ti_option;
 				}
 				?>
                 
-				<?php
-				// Enable/Disable sidebar based on the field selection
-				if ( ! get_field( 'page_sidebar' ) || get_field( 'page_sidebar' ) == 'page_sidebar_on' ):
-				?>
                 </div><!-- .grid-8 -->
             
-                <div class="grid-4">
-                    <?php get_sidebar(); ?>
-                </div>
             </div><!-- .grids -->
             <?php endif; ?>
         
