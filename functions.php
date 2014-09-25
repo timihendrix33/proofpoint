@@ -133,11 +133,11 @@
 	        		}
 			            foreach ( $terms as $term )
 			            	if ($taxonomy == "website") {
-			                	$out .= '<a href="http://' . $term->name .'">'.$term->name.'</a> ';
+			                	$out .= "<a href='http://" . $term->name ."' target='_blank' >".$term->name."</a>";
 			            	} elseif ($taxonomy == "category") {
-			            		$out .= '<a href="' . get_term_link($term->slug, $taxonomy) .'">'.$term->name.'</a> ';
+			            		$out .= "<a href='" . get_term_link($term->slug, $taxonomy) ."'>".$term->name."</a>";
 			            	} elseif ($taxonomy == "twitter") {
-			            		$out .= '<a href="http://twitter.com/' .$term->name . '">'.$term->name. '</a> ';
+			            		$out .= "<a href='http://twitter.com/" .$term->name . " ' target='_blank'>" .$term->name. "</a>";
 			            	} elseif ($taxonomy == "competitors" || $taxonomy == "model" || $taxonomy == "founded") {
 			            		$out .=   '<span>'.$term->name.'</span>';
 			            	}

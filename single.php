@@ -1,4 +1,4 @@
-<?php 
+    <?php 
 /**
  * The Template for displaying all single blog posts
  *
@@ -62,7 +62,7 @@ global $ti_option;
                             $attachment_url = wp_get_attachment_url($attachment_id);
                         ?>
                         <p>
-                            <a href="<?php echo $attachment_url ?>">Download PowerPoint Slide</a>
+                            <a href="<?php echo $attachment_url ?>">Download Slide</a>
                         </p>
                         <?php endif ?>
                     </div>      

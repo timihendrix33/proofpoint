@@ -146,11 +146,9 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
         var update_bookmarks_count = function() {
 
             
-            console.log(<?php echo wpfp_user_favs_count(); ?>);
             var $bookmarks = '(' + <?php echo wpfp_user_favs_count(); ?> + ')';
             if($bookmarks !== "(0)") {
                 jQuery("#user_favs_count").html($bookmarks);
-                console.log("ubc is being called");
             }
         }
         update_bookmarks_count();
@@ -170,13 +168,20 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
                     jQuery("#user_favs_count").html('(' + $bookmarks +  ')');
                 } else {
                     jQuery("#user_favs_count").html('');
-                }
+                }              
         }
             //Remove favorites when cleared
         var remove_favorites = function() {
             jQuery(".wpfp-span.grids").fadeOut().remove();
             jQuery("#user_favs_count").html('');
         }
+
+        
+        jQuery('article').on("click", function(){
+            console.log("article clicked");        
+        });
+        
+        
  
     </script>
 

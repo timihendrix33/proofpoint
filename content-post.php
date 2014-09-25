@@ -9,8 +9,9 @@ global $ti_option;
 ?>
 <?php $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID) ); ?>  
 <article style="background-image: url(<?php echo $src[0]; ?> ) !important;" <?php post_class("grid-6"); ?>>
+    <div class="link-to-post" onclick="location.href='<?php the_permalink(); ?>';"></div>
     <div class="blur-image" style="background-image: url(<?php echo $src[0]; ?> ) !important;"></div>   
-    <div class="post-info"> 
+    <div class="post-info" onclick="event.preventDefault();"> 
         <header class="entry-header">
             <a href="<?php the_permalink() ?>">
                 <h2 class="entry-title">

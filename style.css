@@ -78,6 +78,12 @@ input[type="email"]:focus, input[type="password"]:focus,
 	padding-bottom:0;
 	border-bottom:none;
 }
+article.error404 {
+	margin-bottom: 60px;
+}
+article.error404 img {
+	margin-bottom: 20px;
+}
 
 /* Header */
 #masthead {
@@ -333,6 +339,13 @@ article.post {
 	background-size:  cover;	
 	position: relative;
 	height: 330px;
+	
+}
+article.post .link-to-post {
+	width:100%; 
+	height:100%; 
+	z-index:0;
+	cursor: pointer;
 }
 article.post .blur-image {
 	height: 180px;
@@ -373,7 +386,8 @@ article.post .post-info {
 	overflow: hidden;	
 }
 article.post .bookmark .wpfp-span,
-article.post .bookmark a {
+article.post .bookmark a,
+article.post .bookmark {
 	color: #c6c6c6;
 	font-size: 12px;
 }
@@ -460,7 +474,7 @@ article.post .entry-summary {
 	display: block;
 }*/
 .copyright {
-	padding:0 0 30px 0;
+	padding:0 0 40px 0;
 }
 .copyright a {
 	color: #dc002e;	
@@ -599,6 +613,13 @@ ul.taxonomies li a {
 .nav-next [class^="icon-"], .nav-previous [class^="icon-"] {
 	top:20%;
 }
+.related-posts a.related-thumb {
+	display: block;
+	width: 100%;
+	height: 150px;
+	background-position: 0 center;
+	background-size: cover;
+}
 .related-posts .entry-title a {
 	color:#6e6e6e;
 }
@@ -643,9 +664,6 @@ ul.taxonomies li a {
 .ufo-form span.ufo-cell-center {
 	width: 79% !important;
 }
-.ufo-form span.ufo-cell-center textarea {
-	width: 126% !important;
-}
 .ufo-form button {
 	background: #de0220;
 	color: #fff;
@@ -661,6 +679,8 @@ div.ufo-form .ufo-customfields-invalid {
 	padding: 0px !important;
 	color: #de0220 !important;	
 	margin-bottom: 10px !important;	
+	position: relative !important;
+	top: 10px !important;
 }
 .ufo-customform-row div:first-child {
 	line-height: 1.5 !important;

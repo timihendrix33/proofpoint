@@ -45,9 +45,11 @@
                 <div class="export clearfix">
                      <div class="posts-per-page">
                             <p>Items per page:
-                              <a class="<?php if($wp_query->query['posts_per_page'] == 15){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] . array_shift(explode('?',$_SERVER["REQUEST_URI"])) ?>?posts_per_page=15">15</a>
-                              <a class="<?php if($wp_query->query['posts_per_page'] == 30 || $wp_query->query['posts_per_page'] == ''){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] . array_shift(explode('?',$_SERVER["REQUEST_URI"])) ?>?posts_per_page=30">30</a>
-                              <a class="<?php if($wp_query->query['posts_per_page'] == 50){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] . array_shift(explode('?',$_SERVER["REQUEST_URI"])) ?>?posts_per_page=50">50</a>
+                            <!-- In order to stay on the page number when changing the posts per page, add this to the href: . array_shift(explode('?',$_SERVER["REQUEST_URI"])) -->
+                            <!-- Watch out though, it causes a 404 when you're further than the number of pages there are with a high number of posts per page -->
+                              <a class="<?php if($wp_query->query['posts_per_page'] == 15){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] ?>?posts_per_page=15">15</a>
+                              <a class="<?php if($wp_query->query['posts_per_page'] == 30 || $wp_query->query['posts_per_page'] == ''){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] ?>?posts_per_page=30">30</a>
+                              <a class="<?php if($wp_query->query['posts_per_page'] == 50){echo 'current-posts-per-page';}?>" href="http://<?php echo $_SERVER["HTTP_HOST"] ?>?posts_per_page=50">50</a>
                             </p>
                     </div>    
                     <?php ti_pagination(); ?>      
