@@ -175,11 +175,6 @@ if ( get_field( 'page_sidebar' ) == 'page_sidebar_on' || get_field('category_sli
             jQuery(".wpfp-span.grids").fadeOut().remove();
             jQuery("#user_favs_count").html('');
         }
-
-        
-        jQuery('article').on("click", function(){
-            console.log("article clicked");        
-        });
         
         
  
