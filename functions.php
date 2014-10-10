@@ -138,7 +138,15 @@
 			            		$out .= "<a href='" . get_term_link($term->slug, $taxonomy) ."'>".$term->name."</a>";
 			            	} elseif ($taxonomy == "twitter") {
 			            		$out .= "<a href='http://twitter.com/" .$term->name . " ' target='_blank'>" .$term->name. "</a>";
-			            	} elseif ($taxonomy == "competitors" || $taxonomy == "model" || $taxonomy == "founded") {
+			            	} elseif ($taxonomy == "competitors") {
+			            		$competitor_term = $term->name;
+			            		$competitor = get_page_by_title($competitor_term, 'OBJECT', 'post');
+			            		if (!$competitor == null) {
+			            			$out .=  "<a href='".$competitor->guid. "'>".$competitor->post_title."</a>";
+			            		} else {
+			            		$out .=   '<span>'. $term->name .'</span>';
+			            		}
+			            	} elseif ($taxonomy == "model" || $taxonomy == "founded") {
 			            		$out .=   '<span>'.$term->name.'</span>';
 			            	}
 					$out .= "</li>";	
